@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html ng-app="industrySort">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>行业四级联动</title>
+    <link rel="stylesheet" href="css/bootstrap.css"/>
+    <style>
+        form{
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<form  class="form-horizontal form" ng-controller="sortMakerCtrl"  ng-view>
+    <div class="form-group">
+        <label for="industryFir" class="col-sm-1 control-label">一级</label>
+        <select id="industryFir" class="col-sm-5" ng-model="industryFir" name="industryFir">
+            <option value="">--请选择行业--</option>
+            <option ng-repeat="x in industryFirs" value="{{x.industry_code}}">{{x.industry_name}}</option>
+        </select>
+        <label for="industrySec" class="col-sm-1 control-label">二级</label>
+        <select id="industrySec" class="col-sm-5" ng-model="industrySec" name="industrySec">
+            <option value="">--请选择行业--</option>
+            <option ng-repeat="x in industrySecs" value="{{x.industry_code}}">{{x.industry_name}}</option>
+        </select>
+    </div>
+
+
+    <div class="form-group">
+        <label for="industryTir" class="col-sm-1 control-label">三级</label>
+        <select id="industryTir" class="col-sm-5" ng-model="industryTir" name="industryTir">
+            <option value="">--请选择行业--</option>
+            <option ng-repeat="x in industryTirs" value="{{x.industry_code}}">{{x.industry_name}}</option>
+        </select>
+        <label for="industryFou" class="col-sm-1 control-label">四级</label>
+        <select id="industryFou" class="col-sm-5" ng-model="industryFou" name="industryFou" ng-change="console.log(x)">
+            <option value="">--请选择行业--</option>
+            <option ng-repeat="x in industryFous" value="{{x.industry_code}}">{{x.industry_name}}</option>
+        </select>
+    </div>
+
+    行业编码：<input value="{{industryFou}}">
+</form>
+
+<script src="js/angular.js"></script>
+<script src="js/industryCode.js"></script>
+<script>
+angular.module("industrySort",["ng"])
+    .controller("sortMakerCtrl",["$getData","$scope",function($getData,$scope){
+        $scope.industryFirs=$getData.industryCodeOf();
+        /*
+         * 1、TODO 监听一级行业industryFir改变，更新二级行业列表
+         * */
+        $scope.$watch("industryFir",function(newVal){
+            if(newVal){
+                $scope.industrySecs=$getData.industryCodeOf(newVal);
+                $scope.account=$scope.institutionchecked+
+                $scope.countryChecked+
+                $scope.industryFir;
+            }
+            $scope.industrySec=null;
+            $scope.industryTir=null;
+            $scope.industryFou=null;
+            $scope.userChecked=null;
+        });
+        /*
+         * 1、TODO 监听二级行业industrySec改变，更新三级行业列表
+         * */
+        $scope.$watch("industrySec",function(newVal){
+            if(newVal){
+                $scope.industryTirs=$getData.industryCodeOf(newVal);
+                $scope.industryFous=[];
+                $scope.account=$scope.institutionchecked+
+                $scope.countryChecked+
+                $scope.industrySec;
+            }
+            $scope.industryTir=null;
+            $scope.industryFou=null;
+            $scope.userChecked=null;
+        });
+        /*
+         * 1、TODO 监听三级行业industryTir改变，更新四级行业列表
+         * */
+        $scope.$watch("industryTir",function(newVal){
+            if(newVal){
+                $scope.industryFous=$getData.industryCodeOf(newVal);
+                $scope.account=$scope.institutionchecked+
+                $scope.countryChecked+
+                $scope.industryTir;
+            }
+            $scope.industryFou=null;
+            $scope.userChecked=null;
+        });
+
+    }])
+    .factory("$getData",function(){
+        return {
+            industryCodeOf:function(code){
+                var newArr=[];
+                angular.forEach(industryCodeJson,function(value){
+
+                });
+                if(!code){
+                    angular.forEach(industryCodeJson,function(value){
+                        if(value.industry_code.length===1){
+                            newArr.push(value);
+                        }
+                    });
+                }else if(code.length===1){//industryCodeFir
+                    angular.forEach(industryCodeFir[code],function(strValue){
+                        angular.forEach(industryCodeJson,function(resultValue){
+                            if(strValue===resultValue.industry_code){
+                                newArr.push(resultValue);
+                            }
+                        });
+                    });
+                }else if(code.length===2){
+                    angular.forEach(industryCodeJson,function(value){
+                        if(value.industry_code.length===3 && value.industry_code.indexOf(code)>-1){
+                            newArr.push(value);
+                        }
+                    });
+                }else if(code.length===3){
+                    angular.forEach(industryCodeJson,function(value){
+                        if(value.industry_code.length===4 && value.industry_code.indexOf(code)>-1){
+                            newArr.push(value);
+                        }
+                    });
+                }
+                return newArr;
+            }
+        }
+    });
+</script>
+</body>
+</html>
