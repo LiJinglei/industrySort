@@ -3,7 +3,7 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>行业四级联动</title>
-    <link rel="stylesheet" href="css/bootstrap.css"/>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"/>
     <style>
         form{
             margin-top: 20px;
@@ -42,8 +42,8 @@
     行业编码：<input value="{{industryFou}}">
 </form>
 
-<script src="js/angular.js"></script>
-<script src="js/industryCode.js"></script>
+<script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script>
+<script src="industryCode.js"></script>
 <script>
 angular.module("industrySort",["ng"])
     .controller("sortMakerCtrl",["$getData","$scope",function($getData,$scope){
