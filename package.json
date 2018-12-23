@@ -1,0 +1,22 @@
+{
+  "name": "industrysort",
+  "version": "1.0.0",
+  "description": "行业编码\r 由于工作需要，开发四级行业联动，网上木有，自己动手",
+  "main": "industryCode.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LiJinglei/industrySort.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LiJinglei/industrySort/issues"
+  },
+  "homepage": "https://github.com/LiJinglei/industrySort#readme",
+  "dependencies": {
+    "es6": "0.0.7"
+  }
+}
