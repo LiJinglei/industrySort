@@ -18,5 +18,8 @@
   "homepage": "https://github.com/LiJinglei/industrySort#readme",
   "dependencies": {
     "es6": "0.0.7"
+  },
+  "devDependencies": {
+    "webpack": "^4.28.2"
   }
 }
